@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commandes en Attente</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        /* Style des boutons en haut de page */
+        .top-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .top-buttons a {
+            text-decoration: none;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .top-buttons a:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        td button {
+            padding: 5px 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        td button:hover {
+            background-color: darkred;
+        }
+        form {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Boutons en haut de la page -->
+    <div class="top-buttons">
+        <a href="/">Retour à l'accueil</a>
+        <a href="/commande">Commande</a>
+    </div>
+
+    <h1>Commandes en Attente</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Téléphone</th>
+                <th>Adresse</th>
+                <th>Numéro de commande</th>
+                <th>Date</th>
+                <th>Types de croûte</th>
+                <th>Types de sauce</th>
+                <th>Garniture</th>
+                <th>Supprimer</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for commande in commandes %}
+                <tr>
+                    <td>{{ commande.client_nom }}</td>
+                    <td>{{ commande.client_telephone }}</td>
+                    <td>{{ commande.client_adresse }}</td>
+                    <td>{{ commande.commande_id }}</td>
+                    <td>{{ commande.date_commande }}</td>
+                    <td>{{ commande.croute_nom }}</td>
+                    <td>{{ commande.sauce_nom }}</td>
+                    <td>{{ commande.garnitures }}</td>
+                    <td>
+                        <form method="post" action="/supprimer_commande/{{ commande.commande_id }}">
+                            <button type="submit">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

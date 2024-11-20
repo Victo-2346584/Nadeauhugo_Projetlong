@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résumé de la Commande</title>
+</head>
+<body>
+    <h1>Information du client</h1>
+    <p>Nom : {{ commande['nom'] }}</p>
+    <p>Téléphone : {{ commande['telephone'] }}</p>
+    <p>Adresse : {{ commande['adresse'] }}</p>
+
+    <h1>Résumé de la Commande</h1>
+    <p>Type de croûte : {{ commande['croute'] }}</p>
+    <p>Type de sauce : {{ commande['sauce'] }}</p>
+
+    <h2>Garnitures :</h2>
+    {% for garniture in commande['garnitures'] %}
+        <p>- {{ garniture[1] }}</p>
+    {% endfor %}
+
+    <!-- Formulaire pour valider la commande -->
+    <form method="POST" action="/validation">
+        <input type="hidden" name="nom" value="{{ commande['nom'] }}">
+        <input type="hidden" name="telephone" value="{{ commande['telephone'] }}">
+        <input type="hidden" name="adresse" value="{{ commande['adresse'] }}">
+        <input type="hidden" name="croute" value="{{ commande['croute'] }}">
+        <input type="hidden" name="sauce" value="{{ commande['sauce'] }}">
+        
+        {% for garniture_id, garniture_nom in commande['garnitures'] %}
+        <input type="hidden" name="garnitures" value="{{ garniture_id }}">
+        {% endfor %}
+    
+
+        <button type="submit">Valider la commande</button>
+    </form>
+</body>
+</html>

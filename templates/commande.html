@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer une Commande</title>
+    <script>
+        // Script pour limiter la sélection à 4 garnitures
+        document.addEventListener('DOMContentLoaded', function () {
+            const checkboxes = document.querySelectorAll('input[name="garnitures"]');
+            const maxSelection = 4;
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+
+                    if (checkedCount > maxSelection) {
+                        alert(`Vous ne pouvez sélectionner que ${maxSelection} garnitures.`);
+                        this.checked = false; // Désélectionne la case cochée
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Créer une Commande</h1>
+    <form method="post" action="/commandeResume">
+        <h1>Rechercher ou Créer un Client</h1>
+        <label for="nom">Nom :</label>
+        <input type="text" name="nom" id="nom" required><br>
+
+        <label for="telephone">Téléphone :</label>
+        <input type="text" name="telephone" id="telephone" required><br>
+
+        <label for="adresse">Adresse :</label>
+        <input type="text" name="adresse" id="adresse" required><br>
+
+        <h1>information de la pizza</h1>
+        <label for="croute">Type de croûte :</label>
+        <select name="croute_id" id="croute" required>
+            {% for croute in croutes %}
+                <option value="{{ croute['croute_id'] }}">{{ croute['nom'] }}</option>
+            {% endfor %}
+        </select><br>
+    
+        <label for="sauce">Type de sauce :</label>
+        <select name="sauce_id" id="sauce" required>
+            {% for sauce in sauces %}
+                <option value="{{ sauce['sauce_id'] }}">{{ sauce['nom'] }}</option>
+            {% endfor %}
+        </select><br>
+    
+        <label for="garnitures">Garnitures (max 4) :</label><br>
+        <select name="garniture1" id="garniture1" >
+            {% for garniture in garnitures %}
+                <option value="{{ garniture['garniture_id'] }}">{{ garniture['nom'] }}</option>
+                {% endfor %}
+        </select><br>
+    
+        <select name="garniture2" id="garniture2" >
+            {% for garniture in garnitures %}
+                <option value="{{ garniture['garniture_id'] }}">{{ garniture['nom'] }}</option>
+                {% endfor %}
+        </select><br>
+        <select name="garniture3" id="garniture3" >
+            {% for garniture in garnitures %}
+                <option value="{{ garniture['garniture_id'] }}">{{ garniture['nom'] }}</option>
+                {% endfor %}
+        </select><br>
+    
+        <select name="garniture4" id="garniture4" >
+            {% for garniture in garnitures %}
+                <option value="{{ garniture['garniture_id'] }}">{{ garniture['nom'] }}</option>
+                {% endfor %}
+        </select><br>
+
+        <button type="submit">Résumé</button>
+    </form>    
+    
+</body>
+</html>
